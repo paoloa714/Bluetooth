@@ -49,6 +49,15 @@ public class Find_Devices extends Activity {
 		devicenames.setAdapter(mDevices);
 		devicenames.setOnItemClickListener(mDeviceClickListener);
 		
+		// make sure device can be discovered for 2 mins
+   		if (mBTadapter.getScanMode() !=
+   	            BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+   	            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+   	            // discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION , 300); //uncomment if you want to set discoverable time window
+   	            startActivity(discoverableIntent);
+   	        }
+		
+		
 		//find bluetooth devices when you press the button
 		Button scan = (Button) findViewById(R.id.scan_button);
 		scan.setText("Scan Devices");

@@ -7,5 +7,6 @@
     <string name="connect">Connect</string>
     <string name="title_activity_find__devices">Connect to Bluetooth Devices</string>
     <string name="scanning">scanning</string>
+    <string name="title_activity_connect_device">Connect device</string>
 
 </resources>

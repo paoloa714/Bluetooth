@@ -11,7 +11,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
 	private static final int REQUEST_ENABLE_BT = 1,
-							 REQUEST_DEVICE_ADDRESS = 2;
+							 REQUEST_DEVICE_ADDRESS = 2,
+							 CONNECT_DEVICE = 3;
 	
 	private BluetoothAdapter mBTadapter;
 
@@ -33,14 +34,6 @@ public class MainActivity extends Activity {
             finish();
             return;
    		}
-
-   		// make sure device can be discovered for 2 mins
-   		if (mBTadapter.getScanMode() !=
-   	            BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-   	            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-   	            // discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION , 300); //uncomment if you want to set discoverable time window
-   	            startActivity(discoverableIntent);
-   	        }
    		
         setContentView(R.layout.activity_main);
     }
@@ -61,7 +54,13 @@ public class MainActivity extends Activity {
         switch (requestCode) {
         	case REQUEST_DEVICE_ADDRESS:
         		String address = data.getExtras().getString(Find_Devices.EXTRA_DEVICE_ADDRESS);
-        		Toast.makeText(this, "Will attempt to connect to" + address, Toast.LENGTH_LONG).show();
+        		Intent connect_it = new Intent(this, Connect_device.class);
+        		startActivityForResult(connect_it, CONNECT_DEVICE);
+        		break;
+        	case CONNECT_DEVICE:
+        		Toast.makeText(this, "Connected to device", Toast.LENGTH_LONG).show();
+        		break;
+        		
         }
     }
 }
