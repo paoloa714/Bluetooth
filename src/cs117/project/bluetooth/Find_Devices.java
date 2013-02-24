@@ -136,7 +136,6 @@ public class Find_Devices extends Activity {
 			if(BluetoothDevice.ACTION_FOUND.equals(action)){
 				BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 				mDevices.add(device.getName() + "\n" + device.getAddress());
-				
 			}
 			return;
 		}

@@ -46,16 +46,17 @@ public class MainActivity extends Activity {
     }
     
     public void find_devices(View view){ // "connect" button is pressed, this is assigned in activity_main.xml
-    	Intent fd_intent = new Intent(this, Find_Devices.class);
-    	startActivityForResult(fd_intent , REQUEST_DEVICE_ADDRESS);
+    /*	Intent fd_intent = new Intent(this, Find_Devices.class);
+    	startActivityForResult(fd_intent , REQUEST_DEVICE_ADDRESS);*/
+    	
+    	Intent connect_it = new Intent(this, Connect_device.class);
+		startActivityForResult(connect_it, CONNECT_DEVICE);
     }
     
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
         	case REQUEST_DEVICE_ADDRESS:
         		String address = data.getExtras().getString(Find_Devices.EXTRA_DEVICE_ADDRESS);
-        		Intent connect_it = new Intent(this, Connect_device.class);
-        		startActivityForResult(connect_it, CONNECT_DEVICE);
         		break;
         	case CONNECT_DEVICE:
         		Toast.makeText(this, "Connected to device", Toast.LENGTH_LONG).show();

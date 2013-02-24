@@ -6,6 +6,7 @@ import java.util.UUID;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
@@ -15,7 +16,17 @@ public class Connection_service {
 	private static final String NAME = "BluetoothConnectionService";
 	private static final UUID MY_UUID =
 	        UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
-	private Content
+	private Context context;
+	private manageThread mManageThread;
+	private AcceptThread mAcceptThread;
+	
+	public Connection_service(){
+		mAcceptThread = new AcceptThread();
+	}
+	
+	public void start(){
+		mAcceptThread.start();
+	}
 	
 	private class AcceptThread extends Thread {
 	    private final BluetoothServerSocket mmServerSocket;
@@ -45,8 +56,7 @@ public class Connection_service {
 	            // If a connection was accepted
 	            if (socket != null) {
 	                // Do work to manage the connection (in a separate thread)
-	                manageConnectedSocket(socket);
-	                cancel();
+	                mManageThread = new manageThread();
 	                try {
 						mmServerSocket.close();
 					} catch (IOException e) {
@@ -67,10 +77,13 @@ public class Connection_service {
 	}
 	
 	private class manageThread extends Thread {
+		private static final String BROADCAST_ACTION = "Stuff";
+
 		manageThread(){
 			Intent it = new Intent();
 			it.setAction(BROADCAST_ACTION);
-			sendBroadcast(it);
+			context.sendBroadcast(it);
+			return;
 		}
 	}
 }
